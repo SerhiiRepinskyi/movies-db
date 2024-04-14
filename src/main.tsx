@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
-import "./index.css";
+import "./index.scss";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import About from "./features/About/About.tsx";
 import Movies from "./features/Movies/Movies.tsx";

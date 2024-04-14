@@ -21,7 +21,7 @@ const initialState: MoviesState = {
     ]
 }
 
-const moviesReducer: Reducer<MoviesState, Action> = (state, action) => {
+const moviesReducer: Reducer<MoviesState, Action> = () => {
     return initialState;
 }
 
