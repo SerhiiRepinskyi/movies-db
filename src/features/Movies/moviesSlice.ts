@@ -36,7 +36,7 @@ function loaded(movies: Movie[]) {
 // export type AppThunk<ReturnType> = ThunkAction<ReturnType, MoviesState, undefined, UnknownAction>;
 
 export function fetchMovies(): AppThunk<Promise<void>> {
-  return async (dispatch, getState) => {
+  return async (dispatch, _getState) => {
     dispatch(loading());
 
     const configuration = await client.getConfiguration(); // todo: single load per app
@@ -57,7 +57,7 @@ export function fetchMovies(): AppThunk<Promise<void>> {
 }
 
 const moviesReducer = createReducer<MoviesState>(initialState, {
-  "movies/loading": (state, action: ActionWithPayload<boolean>) => {
+  "movies/loading": (state, _action: ActionWithPayload<boolean>) => {
     return { ...state, loading: true };
   },
   "movies/loaded": (state, action: ActionWithPayload<Movie[]>) => {
