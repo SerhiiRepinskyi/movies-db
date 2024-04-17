@@ -12,11 +12,14 @@ import About from "./features/About/About.tsx";
 import { Provider } from "react-redux";
 import store from "./store.ts";
 import Home from "./features/Home/Home.tsx";
+import { ErrorBoundary } from "./ErrorBoundary.tsx";
 
 function AppEntrypoint() {
   return (
     <Provider store={store}>
-      <App />
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
     </Provider>
   );
 }
@@ -50,3 +53,4 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <RouterProvider router={router} />
   </React.StrictMode>
 );
+
