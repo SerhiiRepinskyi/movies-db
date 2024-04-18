@@ -3,16 +3,18 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Movies from "./features/Movies/Movies.tsx";
-import About from "./features/About/About.tsx";
 import { Provider } from "react-redux";
 import store from "./store.ts";
-import Home from "./features/Home/Home.tsx";
 import { ErrorBoundary } from "./ErrorBoundary.tsx";
+import { LinearProgress } from "@mui/material";
+
+const Home = lazy(() => import("./features/Home/Home.tsx"));
+const Movies = lazy(() => import("./features/Movies/Movies.tsx"));
+const About = lazy(() => import("./features/About/About.tsx"));
 
 function AppEntrypoint() {
   return (
@@ -32,15 +34,27 @@ const router = createBrowserRouter(
       children: [
         {
           path: "/",
-          element: <Home />,
+          element: (
+            <Suspense fallback={<LinearProgress sx={{ mt: 1 }} />}>
+              <Home />
+            </Suspense>
+          ),
         },
         {
           path: "movies",
-          element: <Movies />,
+          element: (
+            <Suspense fallback={<LinearProgress sx={{ mt: 1 }} />}>
+              <Movies />
+            </Suspense>
+          ),
         },
         {
           path: "about",
-          element: <About />,
+          element: (
+            <Suspense fallback={<LinearProgress sx={{ mt: 1 }} />}>
+              <About />
+            </Suspense>
+          ),
         },
       ],
     },
