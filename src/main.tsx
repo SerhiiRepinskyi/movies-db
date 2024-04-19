@@ -14,6 +14,7 @@ import { LinearProgress } from "@mui/material";
 
 const Home = lazy(() => import("./features/Home/Home.tsx"));
 const Movies = lazy(() => import("./features/Movies/Movies.tsx"));
+const Extra = lazy(() => import("./features/Extra/Extra.tsx"));
 const About = lazy(() => import("./features/About/About.tsx"));
 
 function AppEntrypoint() {
@@ -49,6 +50,14 @@ const router = createBrowserRouter(
           ),
         },
         {
+          path: "extra",
+          element: (
+            <Suspense fallback={<LinearProgress sx={{ mt: 1 }} />}>
+              <Extra />
+            </Suspense>
+          ),
+        },
+        {
           path: "about",
           element: (
             <Suspense fallback={<LinearProgress sx={{ mt: 1 }} />}>
@@ -67,4 +76,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <RouterProvider router={router} />
   </React.StrictMode>
 );
+
+
+
+
+
+
 
