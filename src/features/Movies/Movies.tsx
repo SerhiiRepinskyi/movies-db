@@ -1,10 +1,10 @@
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useState } from "react";
 import { Container, Grid, LinearProgress, Typography } from "@mui/material";
-import { AuthContext, anonymousUser } from "../../AuthContext";
 import { useIntersectionObserver } from "../../hooks/useIntersectionObserver";
 import { MoviesFilter } from "./MoviesFilter";
 import MovieCard from "./MovieCard";
 import { useGetMoviesQuery, useGetConfigurationQuery, MoviesQuery } from "../../services/tmdb";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const initialQuery = {
   page: 1,
@@ -12,6 +12,7 @@ const initialQuery = {
 };
 
 function Movies() {
+  const { isAuthenticated, user } = useAuth0();
   const [query, setQuery] = useState<MoviesQuery>(initialQuery);
 
   const { data: configuration } = useGetConfigurationQuery();
@@ -23,9 +24,6 @@ function Movies() {
     return imagePath && configuration ? `${configuration.images.base_url}w780${imagePath}` : undefined;
   }
 
-  const auth = useContext(AuthContext);
-  const loggedIn = auth.user !== anonymousUser;
-
   const onIntersect = useCallback(() => {
     if (hasMorePages) {
       setQuery((q) => ({ ...q, page: q.page + 1 }));
@@ -35,8 +33,8 @@ function Movies() {
   const [targetRef] = useIntersectionObserver({ onIntersect });
 
   const handleAddToFavorites = useCallback(
-    (id: number): void => alert(`Not implemented! Action: ${auth.user.name} is adding movie ${id} to favorites.`),
-    [auth.user.name]
+    (id: number): void => alert(`Not implemented! Action: ${user?.name} is adding movie ${id} to favorites.`),
+    [user?.name]
   );
 
   return (
@@ -60,7 +58,7 @@ function Movies() {
         <Container sx={{ py: 8 }} maxWidth="lg">
           {!isFetching && !movies?.length && <Typography variant="h6">No movies were found that match your query.</Typography>}
           <Grid container spacing={4}>
-            {movies?.map((m) => (
+            {movies?.map((m, i) => (
               <Grid item key={m.id} xs={12} sm={6} md={4}>
                 <MovieCard
                   key={m.id}
@@ -69,7 +67,7 @@ function Movies() {
                   overview={m.overview}
                   popularity={m.popularity}
                   image={formatImageUrl(m.backdrop_path)}
-                  enableUserActions={loggedIn}
+                  enableUserActions={isAuthenticated}
                   onAddToFavorite={handleAddToFavorites}
                 />
               </Grid>
@@ -83,3 +81,4 @@ function Movies() {
 }
 
 export default Movies;
+

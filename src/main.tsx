@@ -11,6 +11,11 @@ import { Provider } from "react-redux";
 import store from "./store.ts";
 import { ErrorBoundary } from "./ErrorBoundary.tsx";
 import { LinearProgress } from "@mui/material";
+import { AuthCallback } from "./auth/AuthCallback";
+import { StatefulAuthProvider } from "./auth/StatefulAuthProvider";
+import { Profile } from "./features/Profile/Profile";
+import { AuthenticatedGuard } from "./auth/AuthenticatedGuard";
+import { Protected } from "./features/Protected/Protected";
 
 const Home = lazy(() => import("./features/Home/Home.tsx"));
 const Movies = lazy(() => import("./features/Movies/Movies.tsx"));
@@ -19,11 +24,13 @@ const About = lazy(() => import("./features/About/About.tsx"));
 
 function AppEntrypoint() {
   return (
-    <Provider store={store}>
-      <ErrorBoundary>
-        <App />
-      </ErrorBoundary>
-    </Provider>
+    <StatefulAuthProvider>
+      <Provider store={store}>
+        <ErrorBoundary>
+          <App />
+        </ErrorBoundary>
+      </Provider>
+    </StatefulAuthProvider>
   );
 }
 
@@ -65,6 +72,18 @@ const router = createBrowserRouter(
             </Suspense>
           ),
         },
+        {
+          path: "profile",
+          element: <AuthenticatedGuard component={Profile} />,
+        },
+        {
+          path: "protected",
+          element: <AuthenticatedGuard component={Protected} />,
+        },
+        {
+          path: "callback",
+          element: <AuthCallback />,
+        },
       ],
     },
   ],
@@ -76,10 +95,3 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <RouterProvider router={router} />
   </React.StrictMode>
 );
-
-
-
-
-
-
-

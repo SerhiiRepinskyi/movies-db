@@ -8,7 +8,7 @@ export class ErrorBoundary extends Component<PropsWithChildren<any>> {
     this.state = { hasError: false };
   }
 
-  componentDidCatch(error: Error, _errorInfo: ErrorInfo): void {
+  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
     alert(error);
   }
 
@@ -24,4 +24,3 @@ export class ErrorBoundary extends Component<PropsWithChildren<any>> {
     return this.props.children;
   }
 }
-
