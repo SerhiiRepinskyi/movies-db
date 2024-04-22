@@ -16,11 +16,13 @@ export function AuthSection() {
   };
 
   const handleLogout = () => {
+    const basePath = "/movies-db";
+    const returnTo = `${window.location.origin}${basePath}`;
+    // const returnTo = "http://localhost:5173/movies-db";
+
     logout({
       logoutParams: {
-        returnTo: window.location.origin,
-        // returnTo: "http://localhost:5173/movies-db",
-        // returnTo: "https://serhiirepinskyi.github.io/movies-db",
+        returnTo: returnTo,
       },
     });
   };
@@ -33,6 +35,4 @@ export function AuthSection() {
     </Button>
   );
 }
-
-
 
