@@ -18,8 +18,9 @@ export function AuthSection() {
   const handleLogout = () => {
     logout({
       logoutParams: {
-        // returnTo: window.location.origin,
-        returnTo: "http://localhost:5173/movies-db",
+        returnTo: window.location.origin,
+        // returnTo: "http://localhost:5173/movies-db",
+        // returnTo: "https://serhiirepinskyi.github.io/movies-db",
       },
     });
   };
@@ -32,4 +33,6 @@ export function AuthSection() {
     </Button>
   );
 }
+
+
 
