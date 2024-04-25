@@ -48,6 +48,28 @@ export interface MoviesState {
   hasMorePages: boolean;
 }
 
+export interface Genre {
+  id: number;
+  name: string;
+}
+
+export interface ProductionCountry {
+  iso_3166_1: string;
+  name: string;
+}
+
+export interface MovieDetailsById {
+  title: string;
+  release_date: string;
+  vote_average: number;
+  tagline: string;
+  overview: string;
+  genres: Genre[];
+  runtime: number;
+  production_countries: ProductionCountry[];
+  poster_path?: string | null;
+}
+
 export const tmdbApi = createApi({
   reducerPath: "tmdbApi",
   baseQuery: fetchBaseQuery({
@@ -112,8 +134,12 @@ export const tmdbApi = createApi({
       query: () => "/genre/movie/list",
       transformResponse: (response: { genres: Genre[] }) => response.genres,
     }),
+    getMovieById: builder.query<MovieDetailsById, number>({
+      query: (movieId) => `/movie/${movieId}`,
+      transformResponse: (response: MovieDetailsById) => response,
+    }),
   }),
 });
 
-export const { useGetMoviesQuery, useGetConfigurationQuery, useGetKeywordsQuery, useGetGenresQuery } = tmdbApi;
+export const { useGetMoviesQuery, useGetConfigurationQuery, useGetKeywordsQuery, useGetGenresQuery, useGetMovieByIdQuery } = tmdbApi;
 
