@@ -19,6 +19,7 @@ import { Protected } from "./features/Protected/Protected";
 
 const Home = lazy(() => import("./features/Home/Home.tsx"));
 const Movies = lazy(() => import("./features/Movies/Movies.tsx"));
+const MovieDetails = lazy(() => import("./features/MovieDetails/MovieDetails.tsx"));
 const Extra = lazy(() => import("./features/Extra/Extra.tsx"));
 const About = lazy(() => import("./features/About/About.tsx"));
 
@@ -53,6 +54,14 @@ const router = createBrowserRouter(
           element: (
             <Suspense fallback={<LinearProgress sx={{ mt: 1 }} />}>
               <Movies />
+            </Suspense>
+          ),
+        },
+        {
+          path: "movies/:movieId",
+          element: (
+            <Suspense fallback={<LinearProgress sx={{ mt: 1 }} />}>
+              <MovieDetails />
             </Suspense>
           ),
         },
